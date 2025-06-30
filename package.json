@@ -1,13 +1,13 @@
 {
-  "name": "ai-hospital-prototype",
-  "description": "100% AI-Operated Hospital - Global Prototype Website",
+  "name": "ai-hospital-system",
+  "description": "100% AI-Operated Hospital System - Revolutionary prototype for emerging countries",
   "version": "1.0.0",
   "author": "Helio Guilherme Dias Silva",
   "license": "MIT",
-  "homepage": "https://github.com/Helioguilhermediassilva/ai-hospital-prototype",
+  "homepage": "https://github.com/Helioguilhermediassilva/ai-hospital-system",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Helioguilhermediassilva/ai-hospital-prototype.git"
+    "url": "https://github.com/Helioguilhermediassilva/ai-hospital-system.git"
   },
   "keywords": [
     "ai",

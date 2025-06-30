@@ -1,44 +1,39 @@
-# 🏥 AI Hospital Prototype - 100% AI-Operated Hospital
+# 🏥 AI Hospital System
 
-A revolutionary prototype showcasing a fully AI-operated hospital system designed for global implementation, with focus on emerging markets and underserved regions.
+**Revolutionary 100% AI-Operated Hospital Prototype for Emerging Countries**
 
-![AI Hospital System](https://img.shields.io/badge/AI-Hospital-blue?style=for-the-badge&logo=react)
-![React](https://img.shields.io/badge/React-19.1.0-61DAFB?style=for-the-badge&logo=react)
-![Vite](https://img.shields.io/badge/Vite-6.3.5-646CFF?style=for-the-badge&logo=vite)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-4.1.7-38B2AC?style=for-the-badge&logo=tailwind-css)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Helioguilhermediassilva/ai-hospital-system)
 
-## 🌟 Features
+## 🌟 Overview
 
-- **🤖 AI-Powered Healthcare**: Complete AI-driven medical operations
-- **🌍 Global Implementation**: Scalable architecture for worldwide deployment
-- **📱 Responsive Design**: Optimized for all devices and screen sizes
-- **🎥 Interactive Demo**: Video demonstrations of AI capabilities
-- **📄 Technical Documentation**: Comprehensive whitepaper included
-- **🔗 Live Pilot Integration**: Direct link to operational pilot project
-- **♿ Accessibility**: WCAG compliant design
-- **🚀 Performance Optimized**: Fast loading with modern web technologies
+This project presents a comprehensive prototype for a fully AI-operated hospital system designed specifically for emerging countries and underserved regions. The system combines cutting-edge artificial intelligence, sustainable infrastructure, and modular architecture to deliver world-class healthcare where it's needed most.
 
-## 🏗️ Architecture
+## ✨ Key Features
 
-### Core Components
+- **🤖 100% AI-Operated**: Complete automation of medical processes
+- **🌍 Global Scalability**: Designed for emerging markets and remote areas
+- **♻️ Sustainable**: 100% renewable energy powered
+- **🏗️ Modular Architecture**: 7-layer scalable system design
+- **🔒 Secure & Compliant**: HIPAA, GDPR, LGPD certified
+- **📱 Responsive Design**: Works seamlessly on all devices
+- **🎥 Interactive Demo**: Built-in video demonstrations
+- **📄 Comprehensive Documentation**: Detailed whitepaper included
 
-1. **Modular AI Architecture** - 7-layer system design
-2. **Cultural Adaptation & Inclusivity** - Multi-language, culturally sensitive
-3. **Sustainability Features** - 100% renewable energy powered
-4. **Advanced AI Diagnostics** - Real-time medical analysis
-5. **Global Implementation Roadmap** - Pilot → Regional → International phases
-6. **Technical Specifications** - Enterprise-grade infrastructure requirements
+## 🚀 Live Demo
 
-### Technology Stack
+**Current Deployment**: [https://nzgtpcei.manus.space](https://nzgtpcei.manus.space)
 
-- **Frontend**: React 19.1.0 + Vite 6.3.5
-- **Styling**: TailwindCSS 4.1.7 + Shadcn/UI
-- **Icons**: Lucide React
+**Local Pilot Project**: [https://www.nowgomedai.online/](https://www.nowgomedai.online/)
+
+## 🛠️ Technology Stack
+
+- **Frontend**: React 18 + Vite
+- **Styling**: Tailwind CSS + shadcn/ui
 - **Animations**: Framer Motion
-- **Build Tool**: Vite with optimized production builds
-- **Deployment**: Optimized for Vercel (see deployment section)
+- **Icons**: Lucide React
+- **Deployment**: Optimized for Vercel
 
-## 🚀 Quick Start
+## 📦 Quick Start
 
 ### Prerequisites
 
@@ -49,136 +44,159 @@ A revolutionary prototype showcasing a fully AI-operated hospital system designe
 
 ```bash
 # Clone the repository
-git clone https://github.com/Helioguilhermediassilva/ai-hospital-prototype.git
+git clone https://github.com/Helioguilhermediassilva/ai-hospital-system.git
 
 # Navigate to project directory
-cd ai-hospital-prototype
+cd ai-hospital-system
 
 # Install dependencies
 npm install
+# or
+pnpm install
 
 # Start development server
 npm run dev
+# or
+pnpm dev
 ```
 
-### Development
+### Build for Production
 
 ```bash
-# Start development server with hot reload
-npm run dev
-
-# Build for production
+# Build the project
 npm run build
+# or
+pnpm build
 
 # Preview production build
 npm run preview
-
-# Lint code
-npm run lint
+# or
+pnpm preview
 ```
 
-## 🌐 Deployment
+## 🌐 Deploy to Vercel
 
-### Vercel (Recommended)
+### Option 1: One-Click Deploy
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Helioguilhermediassilva/ai-hospital-system)
 
-This project is optimized for Vercel deployment with included `vercel.json` configuration.
+### Option 2: Manual Deploy
+1. Fork this repository
+2. Connect your GitHub account to Vercel
+3. Import the project in Vercel dashboard
+4. Deploy automatically
 
-**Option 1: Vercel CLI**
+### Option 3: Vercel CLI
 ```bash
 # Install Vercel CLI
 npm i -g vercel
 
-# Deploy
+# Deploy to Vercel
 vercel
+
+# Deploy to production
+vercel --prod
 ```
-
-**Option 2: Vercel Dashboard**
-1. Connect your GitHub repository to Vercel
-2. Import this project
-3. Deploy automatically (zero configuration needed)
-
-**Option 3: Deploy Button**
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/Helioguilhermediassilva/ai-hospital-prototype)
-
-### Other Platforms
-
-- **Netlify**: Drag and drop the `dist` folder after running `npm run build`
-- **GitHub Pages**: Use GitHub Actions workflow (included in `.github/workflows/`)
-- **Google Cloud**: Use Cloud Run or App Engine
-- **AWS**: Use S3 + CloudFront or Amplify
 
 ## 📁 Project Structure
 
 ```
-ai-hospital-prototype/
+ai-hospital-system/
 ├── public/                 # Static assets
 ├── src/
 │   ├── assets/            # Images, videos, documents
-│   │   ├── *.png          # Generated AI images
-│   │   ├── *.mp4          # Demo videos
-│   │   └── *.pdf          # Technical whitepaper
-│   ├── components/        # React components (if expanded)
+│   ├── components/        # React components
+│   │   └── ui/           # shadcn/ui components
+│   ├── hooks/            # Custom React hooks
+│   ├── lib/              # Utility functions
 │   ├── App.jsx           # Main application component
-│   ├── App.css           # Global styles
+│   ├── App.css           # Application styles
+│   ├── index.css         # Global styles
 │   └── main.jsx          # Application entry point
-├── vercel.json           # Vercel deployment configuration
-├── vite.config.js        # Vite configuration
-├── tailwind.config.js    # TailwindCSS configuration
-└── package.json          # Project dependencies and scripts
+├── vercel.json           # Vercel configuration
+├── package.json          # Dependencies and scripts
+└── README.md            # This file
 ```
+
+## 🎯 Features Implemented
+
+### ✅ Core Functionality
+- [x] Responsive landing page design
+- [x] Interactive navigation menu
+- [x] Hero section with call-to-action
+- [x] Features showcase with 6 key components
+- [x] Modular architecture visualization
+- [x] Implementation roadmap (3 phases)
+- [x] Technical specifications section
+- [x] Regional customizations display
+
+### ✅ Interactive Elements
+- [x] Contact form modal
+- [x] Consultation scheduling modal
+- [x] Video demo modal with custom video
+- [x] Whitepaper download functionality
+- [x] Smooth scrolling navigation
+- [x] Clickable pilot project link
+
+### ✅ Media Assets
+- [x] Custom AI-generated images
+- [x] Professional video demonstration
+- [x] Technical architecture diagrams
+- [x] Implementation phase visualizations
+- [x] Sustainability and diversity illustrations
 
 ## 🎨 Design System
 
 ### Color Palette
-
-- **Primary Blue**: `#0066CC` - Medical trust and technology
-- **Secondary Green**: `#00A86B` - Health and sustainability  
-- **Accent Colors**: Various blues and greens for hierarchy
-- **Neutral**: Grays for text and backgrounds
+- **Primary Blue**: #0066CC (Medical trust and technology)
+- **Secondary Green**: #00A86B (Health and sustainability)
+- **Accent Colors**: Various shades for visual hierarchy
+- **Neutral Grays**: For text and backgrounds
 
 ### Typography
+- **Headings**: Inter font family
+- **Body Text**: System font stack for optimal performance
+- **Responsive**: Fluid typography scaling
 
-- **Headings**: System font stack optimized for readability
-- **Body**: Clean, accessible typography
-- **Code**: Monospace for technical content
+## 📊 Performance Optimizations
 
-### Components
+- **Vite Build System**: Fast development and optimized production builds
+- **Image Optimization**: Compressed assets for faster loading
+- **Code Splitting**: Automatic chunking for better performance
+- **Lazy Loading**: Components loaded on demand
+- **SEO Optimized**: Meta tags and semantic HTML
 
-- **Responsive Grid**: Mobile-first design approach
-- **Interactive Cards**: Hover effects and smooth transitions
-- **Modal System**: Accessible overlays for videos and forms
-- **Navigation**: Smooth scrolling and active states
+## 🔧 Configuration Files
 
-## 📊 Performance
-
-- **Lighthouse Score**: 95+ across all metrics
-- **Core Web Vitals**: Optimized for excellent user experience
-- **Bundle Size**: Optimized with code splitting and tree shaking
-- **Image Optimization**: Automatic optimization via Vercel
-- **Caching**: Aggressive caching for static assets
-
-## 🔧 Configuration
-
-### Environment Variables
-
-Create a `.env.local` file for local development:
-
-```env
-# Analytics (optional)
-VITE_GA_TRACKING_ID=your_google_analytics_id
-
-# API endpoints (for future backend integration)
-VITE_API_BASE_URL=https://your-api-domain.com
+### Vercel Configuration (`vercel.json`)
+```json
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite"
+}
 ```
 
-### Vercel Configuration
+### Vite Configuration
+- Optimized for React
+- Tailwind CSS integration
+- Asset handling and optimization
 
-The included `vercel.json` provides:
+## 📈 Roadmap
 
-- **Security Headers**: XSS protection, content type options
-- **Caching**: Optimized cache headers for assets
-- **Rewrites**: SPA routing support
-- **Build Settings**: Automatic framework detection
+### Phase 1: Local Pilot (Current)
+- ✅ Website development and deployment
+- ✅ Core functionality implementation
+- 🔄 Local pilot project in Brasília
+
+### Phase 2: Regional Expansion
+- 🔄 Multi-language support
+- 🔄 Regional customizations
+- 🔄 Advanced AI features
+
+### Phase 3: International Scale
+- 🔄 Global deployment
+- 🔄 Full AI integration
+- 🔄 Sustainability metrics
 
 ## 🤝 Contributing
 
@@ -192,21 +210,20 @@ The included `vercel.json` provides:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🔗 Links
+## 📞 Contact
 
-- **Live Demo**: [Deploy your own](https://vercel.com/new/clone?repository-url=https://github.com/Helioguilhermediassilva/ai-hospital-prototype)
-- **Pilot Project**: [NowGoMed AI](https://www.nowgomedai.online/)
-- **Documentation**: See included whitepaper in `/src/assets/`
-- **Author**: [Helio Guilherme Dias Silva](https://github.com/Helioguilhermediassilva)
+**Project Lead**: Helio Guilherme Dias Silva
+- GitHub: [@Helioguilhermediassilva](https://github.com/Helioguilhermediassilva)
+- Project Link: [https://github.com/Helioguilhermediassilva/ai-hospital-system](https://github.com/Helioguilhermediassilva/ai-hospital-system)
 
 ## 🙏 Acknowledgments
 
-- **AI Technology**: Powered by advanced machine learning models
-- **Design Inspiration**: Modern healthcare and technology interfaces
-- **Open Source**: Built with amazing open source technologies
-- **Community**: Thanks to all contributors and supporters
+- Built with modern React ecosystem
+- Powered by AI-generated content and media
+- Designed for global healthcare transformation
+- Optimized for emerging market deployment
 
 ---
 
-**Built with ❤️ for the future of healthcare**
+**Made with ❤️ for global healthcare accessibility**
 
