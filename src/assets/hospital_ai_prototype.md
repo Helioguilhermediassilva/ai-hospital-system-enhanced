@@ -1,7 +1,7 @@
 # Protótipo de Hospital 100% Operado por Inteligência Artificial
 ## Arquitetura Modular, Escalabilidade Global e Adaptação Cultural
 
-**Autor:** Manus AI  
+**Autor:** AI Hospital System Team  
 **Data:** 30 de junho de 2025  
 **Versão:** 1.0
 
@@ -1101,7 +1101,7 @@ Campanhas de crowdfunding e filantropia digital ampliam base de suporte e aument
 
 ---
 
-**Documento gerado por Manus AI**  
+**Documento do AI Hospital System**  
 **Data de criação:** 30 de junho de 2025  
 **Versão:** 1.0  
 **Licença:** Creative Commons Attribution 4.0 International
