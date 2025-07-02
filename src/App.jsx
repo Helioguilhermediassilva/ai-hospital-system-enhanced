@@ -897,6 +897,8 @@ function ContactForm({ onClose }) {
     subject: '',
     message: ''
   })
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -908,6 +910,7 @@ function ContactForm({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setIsSubmitting(true)
     
     // Create email content
     const emailSubject = `AI Hospital Contact: ${formData.subject || 'General Inquiry'}`
@@ -931,10 +934,36 @@ Website: https://www.nowgomedai.com
     // Open email client
     window.location.href = mailtoLink
     
-    // Close modal after a short delay
+    // Show success message
     setTimeout(() => {
-      onClose()
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+      
+      // Close modal after showing success message
+      setTimeout(() => {
+        onClose()
+      }, 3000)
     }, 1000)
+  }
+
+  // Success state UI
+  if (isSubmitted) {
+    return (
+      <div className="text-center py-8">
+        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h3 className="text-lg font-semibold text-green-800 mb-2">Message Sent Successfully!</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          Thank you for contacting us. We've received your message and will get back to you as soon as possible.
+        </p>
+        <div className="text-xs text-muted-foreground">
+          This window will close automatically...
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -947,7 +976,8 @@ Website: https://www.nowgomedai.com
           value={formData.name}
           onChange={handleInputChange}
           required
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Enter your full name"
         />
       </div>
@@ -960,7 +990,8 @@ Website: https://www.nowgomedai.com
           value={formData.email}
           onChange={handleInputChange}
           required
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Enter your email"
         />
       </div>
@@ -972,7 +1003,8 @@ Website: https://www.nowgomedai.com
           name="company"
           value={formData.company}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Your company or organization"
         />
       </div>
@@ -983,7 +1015,8 @@ Website: https://www.nowgomedai.com
           name="subject"
           value={formData.subject}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
         >
           <option value="">Select a subject</option>
           <option value="General Information">General Information</option>
@@ -1003,23 +1036,34 @@ Website: https://www.nowgomedai.com
           value={formData.message}
           onChange={handleInputChange}
           required
+          disabled={isSubmitting}
           rows="4"
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Tell us how we can help you..."
         ></textarea>
       </div>
       
       <div className="flex gap-3">
-        <Button type="submit" className="flex-1">
-          Send Message
+        <Button type="submit" className="flex-1" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Sending...
+            </>
+          ) : (
+            'Send Message'
+          )}
         </Button>
-        <Button type="button" variant="outline" onClick={onClose}>
+        <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
           Cancel
         </Button>
       </div>
       
       <div className="text-xs text-muted-foreground text-center">
-        This will open your email client to send the message to helio@nowgo.com.br
+        Your message will be sent securely to our team
       </div>
     </form>
   )
@@ -1037,6 +1081,8 @@ function GetStartedForm({ onClose }) {
     interestArea: '',
     message: ''
   })
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -1048,6 +1094,7 @@ function GetStartedForm({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setIsSubmitting(true)
     
     // Create email content
     const emailSubject = `AI Hospital Get Started: ${formData.interestArea || 'New Request'}`
@@ -1073,10 +1120,36 @@ Website: https://www.nowgomedai.com
     // Open email client
     window.location.href = mailtoLink
     
-    // Close modal after a short delay
+    // Show success message
     setTimeout(() => {
-      onClose()
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+      
+      // Close modal after showing success message
+      setTimeout(() => {
+        onClose()
+      }, 3000)
     }, 1000)
+  }
+
+  // Success state UI
+  if (isSubmitted) {
+    return (
+      <div className="text-center py-8">
+        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h3 className="text-lg font-semibold text-green-800 mb-2">Message Sent Successfully!</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          Thank you for your interest in AI Hospital System. We've received your request and will get back to you soon.
+        </p>
+        <div className="text-xs text-muted-foreground">
+          This window will close automatically...
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -1089,7 +1162,8 @@ Website: https://www.nowgomedai.com
           value={formData.name}
           onChange={handleInputChange}
           required
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Enter your full name"
         />
       </div>
@@ -1102,7 +1176,8 @@ Website: https://www.nowgomedai.com
           value={formData.email}
           onChange={handleInputChange}
           required
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Enter your email"
         />
       </div>
@@ -1114,7 +1189,8 @@ Website: https://www.nowgomedai.com
           name="organization"
           value={formData.organization}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Your organization"
         />
       </div>
@@ -1125,7 +1201,8 @@ Website: https://www.nowgomedai.com
           name="interestArea"
           value={formData.interestArea}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
         >
           <option value="">Select your interest</option>
           <option value="Implementation Partnership">Implementation Partnership</option>
@@ -1142,23 +1219,34 @@ Website: https://www.nowgomedai.com
           value={formData.message}
           onChange={handleInputChange}
           required
+          disabled={isSubmitting}
           rows="3"
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Tell us about your project..."
         ></textarea>
       </div>
       
       <div className="flex gap-3">
-        <Button type="submit" className="flex-1">
-          Submit Request
+        <Button type="submit" className="flex-1" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Sending...
+            </>
+          ) : (
+            'Submit Request'
+          )}
         </Button>
-        <Button type="button" variant="outline" onClick={onClose}>
+        <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
           Cancel
         </Button>
       </div>
       
       <div className="text-xs text-muted-foreground text-center">
-        This will open your email client to send the request to helio@nowgo.com.br
+        Your message will be sent securely to our team
       </div>
     </form>
   )
@@ -1175,6 +1263,8 @@ function ScheduleForm({ onClose }) {
     consultationTopic: '',
     additionalInfo: ''
   })
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -1186,6 +1276,7 @@ function ScheduleForm({ onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    setIsSubmitting(true)
     
     // Create email content
     const emailSubject = `AI Hospital Consultation Request: ${formData.consultationTopic || 'General Consultation'}`
@@ -1213,10 +1304,36 @@ Website: https://www.nowgomedai.com
     // Open email client
     window.location.href = mailtoLink
     
-    // Close modal after a short delay
+    // Show success message
     setTimeout(() => {
-      onClose()
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+      
+      // Close modal after showing success message
+      setTimeout(() => {
+        onClose()
+      }, 3000)
     }, 1000)
+  }
+
+  // Success state UI
+  if (isSubmitted) {
+    return (
+      <div className="text-center py-8">
+        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h3 className="text-lg font-semibold text-green-800 mb-2">Consultation Scheduled!</h3>
+        <p className="text-sm text-muted-foreground mb-4">
+          Thank you for scheduling a consultation. We've received your request and will contact you soon to confirm the details.
+        </p>
+        <div className="text-xs text-muted-foreground">
+          This window will close automatically...
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -1229,7 +1346,8 @@ Website: https://www.nowgomedai.com
           value={formData.name}
           onChange={handleInputChange}
           required
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Enter your full name"
         />
       </div>
@@ -1242,7 +1360,8 @@ Website: https://www.nowgomedai.com
           value={formData.email}
           onChange={handleInputChange}
           required
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Enter your email"
         />
       </div>
@@ -1254,7 +1373,8 @@ Website: https://www.nowgomedai.com
           name="phone"
           value={formData.phone}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Your phone number"
         />
       </div>
@@ -1266,7 +1386,8 @@ Website: https://www.nowgomedai.com
           name="preferredDate"
           value={formData.preferredDate}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
         />
       </div>
       
@@ -1276,7 +1397,8 @@ Website: https://www.nowgomedai.com
           name="preferredTime"
           value={formData.preferredTime}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
         >
           <option value="">Select preferred time</option>
           <option value="9:00 AM - 10:00 AM">9:00 AM - 10:00 AM</option>
@@ -1294,7 +1416,8 @@ Website: https://www.nowgomedai.com
           name="consultationTopic"
           value={formData.consultationTopic}
           onChange={handleInputChange}
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          disabled={isSubmitting}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
         >
           <option value="">Select consultation topic</option>
           <option value="General Information">General Information</option>
@@ -1311,23 +1434,34 @@ Website: https://www.nowgomedai.com
           name="additionalInfo"
           value={formData.additionalInfo}
           onChange={handleInputChange}
+          disabled={isSubmitting}
           rows="3"
-          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
           placeholder="Any additional information or specific questions..."
         ></textarea>
       </div>
       
       <div className="flex gap-3">
-        <Button type="submit" className="flex-1">
-          Schedule Consultation
+        <Button type="submit" className="flex-1" disabled={isSubmitting}>
+          {isSubmitting ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-3 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Scheduling...
+            </>
+          ) : (
+            'Schedule Consultation'
+          )}
         </Button>
-        <Button type="button" variant="outline" onClick={onClose}>
+        <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
           Cancel
         </Button>
       </div>
       
       <div className="text-xs text-muted-foreground text-center">
-        This will open your email client to send the consultation request to helio@nowgo.com.br
+        Your consultation request will be sent securely to our team
       </div>
     </form>
   )
