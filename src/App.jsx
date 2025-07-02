@@ -37,6 +37,7 @@ function App() {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false)
   const [isGetStartedModalOpen, setIsGetStartedModalOpen] = useState(false)
   const [isScheduleModalOpen, setIsScheduleModalOpen] = useState(false)
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false)
 
   // Function to handle video demo
   const handleViewDemo = () => {
@@ -748,30 +749,41 @@ function App() {
             <div className="space-y-4">
               <h4 className="font-semibold">Product</h4>
               <div className="space-y-2 text-sm">
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Features</a>
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Architecture</a>
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Security</a>
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Compliance</a>
+                <a href="#features" className="block text-muted-foreground hover:text-foreground transition-colors">Features</a>
+                <a href="#architecture" className="block text-muted-foreground hover:text-foreground transition-colors">Architecture</a>
+                <a href="#technical-specifications" className="block text-muted-foreground hover:text-foreground transition-colors">Security</a>
+                <a href="#technical-specifications" className="block text-muted-foreground hover:text-foreground transition-colors">Compliance</a>
               </div>
             </div>
             
             <div className="space-y-4">
               <h4 className="font-semibold">Resources</h4>
               <div className="space-y-2 text-sm">
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Documentation</a>
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Whitepaper</a>
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Case Studies</a>
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Research</a>
+                <a href="#technical-specifications" className="block text-muted-foreground hover:text-foreground transition-colors">Documentation</a>
+                <a 
+                  href="/hospital_ai_article_en_authored.pdf" 
+                  download="AI_Hospital_Whitepaper.pdf"
+                  className="block text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Whitepaper
+                </a>
+                <a href="#roadmap" className="block text-muted-foreground hover:text-foreground transition-colors">Case Studies</a>
+                <a href="#customizations" className="block text-muted-foreground hover:text-foreground transition-colors">Research</a>
               </div>
             </div>
             
             <div className="space-y-4">
               <h4 className="font-semibold">Company</h4>
               <div className="space-y-2 text-sm">
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">About</a>
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Team</a>
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Careers</a>
-                <a href="#" className="block text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+                <a href="#hero" className="block text-muted-foreground hover:text-foreground transition-colors">About</a>
+                <a href="#customizations" className="block text-muted-foreground hover:text-foreground transition-colors">Team</a>
+                <a href="https://www.nowgomedai.online/" target="_blank" rel="noopener noreferrer" className="block text-muted-foreground hover:text-foreground transition-colors">Careers</a>
+                <button 
+                  onClick={() => setIsContactModalOpen(true)}
+                  className="block text-muted-foreground hover:text-foreground transition-colors text-left"
+                >
+                  Contact
+                </button>
               </div>
             </div>
           </div>
@@ -952,7 +964,165 @@ function App() {
           </div>
         </div>
       )}
+
+      {/* Contact Modal */}
+      {isContactModalOpen && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+          <div className="relative bg-background rounded-lg max-w-md w-full max-h-[90vh] overflow-hidden">
+            <div className="flex justify-between items-center p-4 border-b">
+              <h3 className="text-lg font-semibold">Contact Us</h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setIsContactModalOpen(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+            <div className="p-6">
+              <ContactForm onClose={() => setIsContactModalOpen(false)} />
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+  )
+}
+
+// Contact Form Component
+function ContactForm({ onClose }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    company: '',
+    subject: '',
+    message: ''
+  })
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    
+    // Create email content
+    const emailSubject = `AI Hospital Contact: ${formData.subject || 'General Inquiry'}`
+    const emailBody = `
+Name: ${formData.name}
+Email: ${formData.email}
+Company: ${formData.company}
+Subject: ${formData.subject}
+
+Message:
+${formData.message}
+
+---
+Sent from AI Hospital System Contact Form
+Website: https://www.nowgomedai.com
+    `.trim()
+
+    // Create mailto link
+    const mailtoLink = `mailto:helio@nowgo.com.br?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
+    
+    // Open email client
+    window.location.href = mailtoLink
+    
+    // Close modal after a short delay
+    setTimeout(() => {
+      onClose()
+    }, 1000)
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-2">Full Name *</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Enter your full name"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Email *</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          required
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Enter your email"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Company/Organization</label>
+        <input
+          type="text"
+          name="company"
+          value={formData.company}
+          onChange={handleInputChange}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Your company or organization"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Subject</label>
+        <select 
+          name="subject"
+          value={formData.subject}
+          onChange={handleInputChange}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          <option value="">Select a subject</option>
+          <option value="General Information">General Information</option>
+          <option value="Partnership Inquiry">Partnership Inquiry</option>
+          <option value="Technical Questions">Technical Questions</option>
+          <option value="Implementation Support">Implementation Support</option>
+          <option value="Investment Opportunity">Investment Opportunity</option>
+          <option value="Media Inquiry">Media Inquiry</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Message *</label>
+        <textarea
+          name="message"
+          value={formData.message}
+          onChange={handleInputChange}
+          required
+          rows="4"
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Tell us how we can help you..."
+        ></textarea>
+      </div>
+      
+      <div className="flex gap-3">
+        <Button type="submit" className="flex-1">
+          Send Message
+        </Button>
+        <Button type="button" variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
+      </div>
+      
+      <div className="text-xs text-muted-foreground text-center">
+        This will open your email client to send the message to helio@nowgo.com.br
+      </div>
+    </form>
   )
 }
 
