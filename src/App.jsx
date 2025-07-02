@@ -837,52 +837,7 @@ function App() {
               </Button>
             </div>
             <div className="p-6">
-              <form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Full Name</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Email</label>
-                  <input
-                    type="email"
-                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Organization</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Your organization"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Interest Area</label>
-                  <select className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                    <option>Implementation Partnership</option>
-                    <option>Technology Licensing</option>
-                    <option>Research Collaboration</option>
-                    <option>Investment Opportunity</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Message</label>
-                  <textarea
-                    rows="3"
-                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Tell us about your project..."
-                  ></textarea>
-                </div>
-                <Button className="w-full">
-                  Submit Request
-                </Button>
-              </form>
+              <GetStartedForm onClose={() => setIsGetStartedModalOpen(false)} />
             </div>
           </div>
         </div>
@@ -903,63 +858,7 @@ function App() {
               </Button>
             </div>
             <div className="p-6">
-              <form className="space-y-4">
-                <div>
-                  <label className="block text-sm font-medium mb-2">Full Name</label>
-                  <input
-                    type="text"
-                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Email</label>
-                  <input
-                    type="email"
-                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Phone</label>
-                  <input
-                    type="tel"
-                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                    placeholder="Your phone number"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Preferred Date</label>
-                  <input
-                    type="date"
-                    className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Preferred Time</label>
-                  <select className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                    <option>9:00 AM - 10:00 AM</option>
-                    <option>10:00 AM - 11:00 AM</option>
-                    <option>11:00 AM - 12:00 PM</option>
-                    <option>2:00 PM - 3:00 PM</option>
-                    <option>3:00 PM - 4:00 PM</option>
-                    <option>4:00 PM - 5:00 PM</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">Consultation Topic</label>
-                  <select className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                    <option>General Information</option>
-                    <option>Implementation Planning</option>
-                    <option>Technical Architecture</option>
-                    <option>Regulatory Compliance</option>
-                    <option>Cost & ROI Analysis</option>
-                  </select>
-                </div>
-                <Button className="w-full">
-                  Schedule Consultation
-                </Button>
-              </form>
+              <ScheduleForm onClose={() => setIsScheduleModalOpen(false)} />
             </div>
           </div>
         </div>
@@ -1127,4 +1026,310 @@ Website: https://www.nowgomedai.com
 }
 
 export default App
+
+
+// Get Started Form Component
+function GetStartedForm({ onClose }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    organization: '',
+    interestArea: '',
+    message: ''
+  })
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    
+    // Create email content
+    const emailSubject = `AI Hospital Get Started: ${formData.interestArea || 'New Request'}`
+    const emailBody = `
+GET STARTED REQUEST
+
+Name: ${formData.name}
+Email: ${formData.email}
+Organization: ${formData.organization}
+Interest Area: ${formData.interestArea}
+
+Message:
+${formData.message}
+
+---
+Sent from AI Hospital System - Get Started Form
+Website: https://www.nowgomedai.com
+    `.trim()
+
+    // Create mailto link
+    const mailtoLink = `mailto:helio@nowgo.com.br?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
+    
+    // Open email client
+    window.location.href = mailtoLink
+    
+    // Close modal after a short delay
+    setTimeout(() => {
+      onClose()
+    }, 1000)
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-2">Full Name *</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Enter your full name"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Email *</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          required
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Enter your email"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Organization</label>
+        <input
+          type="text"
+          name="organization"
+          value={formData.organization}
+          onChange={handleInputChange}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Your organization"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Interest Area</label>
+        <select 
+          name="interestArea"
+          value={formData.interestArea}
+          onChange={handleInputChange}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          <option value="">Select your interest</option>
+          <option value="Implementation Partnership">Implementation Partnership</option>
+          <option value="Technology Licensing">Technology Licensing</option>
+          <option value="Research Collaboration">Research Collaboration</option>
+          <option value="Investment Opportunity">Investment Opportunity</option>
+        </select>
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Message *</label>
+        <textarea
+          name="message"
+          value={formData.message}
+          onChange={handleInputChange}
+          required
+          rows="3"
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Tell us about your project..."
+        ></textarea>
+      </div>
+      
+      <div className="flex gap-3">
+        <Button type="submit" className="flex-1">
+          Submit Request
+        </Button>
+        <Button type="button" variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
+      </div>
+      
+      <div className="text-xs text-muted-foreground text-center">
+        This will open your email client to send the request to helio@nowgo.com.br
+      </div>
+    </form>
+  )
+}
+
+// Schedule Form Component
+function ScheduleForm({ onClose }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    preferredDate: '',
+    preferredTime: '',
+    consultationTopic: '',
+    additionalInfo: ''
+  })
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    
+    // Create email content
+    const emailSubject = `AI Hospital Consultation Request: ${formData.consultationTopic || 'General Consultation'}`
+    const emailBody = `
+CONSULTATION REQUEST
+
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Preferred Date: ${formData.preferredDate}
+Preferred Time: ${formData.preferredTime}
+Consultation Topic: ${formData.consultationTopic}
+
+Additional Information:
+${formData.additionalInfo}
+
+---
+Sent from AI Hospital System - Schedule Consultation Form
+Website: https://www.nowgomedai.com
+    `.trim()
+
+    // Create mailto link
+    const mailtoLink = `mailto:helio@nowgo.com.br?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
+    
+    // Open email client
+    window.location.href = mailtoLink
+    
+    // Close modal after a short delay
+    setTimeout(() => {
+      onClose()
+    }, 1000)
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-2">Full Name *</label>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Enter your full name"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Email *</label>
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleInputChange}
+          required
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Enter your email"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Phone</label>
+        <input
+          type="tel"
+          name="phone"
+          value={formData.phone}
+          onChange={handleInputChange}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Your phone number"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Preferred Date</label>
+        <input
+          type="date"
+          name="preferredDate"
+          value={formData.preferredDate}
+          onChange={handleInputChange}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+        />
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Preferred Time</label>
+        <select 
+          name="preferredTime"
+          value={formData.preferredTime}
+          onChange={handleInputChange}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          <option value="">Select preferred time</option>
+          <option value="9:00 AM - 10:00 AM">9:00 AM - 10:00 AM</option>
+          <option value="10:00 AM - 11:00 AM">10:00 AM - 11:00 AM</option>
+          <option value="11:00 AM - 12:00 PM">11:00 AM - 12:00 PM</option>
+          <option value="2:00 PM - 3:00 PM">2:00 PM - 3:00 PM</option>
+          <option value="3:00 PM - 4:00 PM">3:00 PM - 4:00 PM</option>
+          <option value="4:00 PM - 5:00 PM">4:00 PM - 5:00 PM</option>
+        </select>
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Consultation Topic</label>
+        <select 
+          name="consultationTopic"
+          value={formData.consultationTopic}
+          onChange={handleInputChange}
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+        >
+          <option value="">Select consultation topic</option>
+          <option value="General Information">General Information</option>
+          <option value="Implementation Planning">Implementation Planning</option>
+          <option value="Technical Architecture">Technical Architecture</option>
+          <option value="Regulatory Compliance">Regulatory Compliance</option>
+          <option value="Cost & ROI Analysis">Cost & ROI Analysis</option>
+        </select>
+      </div>
+      
+      <div>
+        <label className="block text-sm font-medium mb-2">Additional Information</label>
+        <textarea
+          name="additionalInfo"
+          value={formData.additionalInfo}
+          onChange={handleInputChange}
+          rows="3"
+          className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          placeholder="Any additional information or specific questions..."
+        ></textarea>
+      </div>
+      
+      <div className="flex gap-3">
+        <Button type="submit" className="flex-1">
+          Schedule Consultation
+        </Button>
+        <Button type="button" variant="outline" onClick={onClose}>
+          Cancel
+        </Button>
+      </div>
+      
+      <div className="text-xs text-muted-foreground text-center">
+        This will open your email client to send the consultation request to helio@nowgo.com.br
+      </div>
+    </form>
+  )
+}
 
