@@ -2,26 +2,26 @@
   "name": "AI Hospital System",
   "short_name": "AI Hospital",
   "description": "100% AI-Operated Hospital System for Emerging Countries",
-  "start_url": "/",
+  "start_url": "https://www.nowgomedai.com/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0066CC",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/favicon.png",
+      "src": "https://www.nowgomedai.com/favicon.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/favicon.png",
+      "src": "https://www.nowgomedai.com/favicon.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/favicon.png",
+      "src": "https://www.nowgomedai.com/favicon.png",
       "sizes": "32x32",
       "type": "image/png",
       "purpose": "any"
@@ -29,7 +29,7 @@
   ],
   "categories": ["medical", "healthcare", "technology"],
   "lang": "en",
-  "scope": "/",
+  "scope": "https://www.nowgomedai.com/",
   "id": "ai-hospital-system"
 }
 
