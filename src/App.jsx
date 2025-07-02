@@ -21,6 +21,7 @@ import {
   Server
 } from 'lucide-react'
 import './App.css'
+import { sendEmail, initEmailJS } from './emailConfig'
 
 // Import images and media
 import heroBanner from './assets/hero_banner.png'
@@ -908,13 +909,41 @@ function ContactForm({ onClose }) {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Create email content
-    const emailSubject = `AI Hospital Contact: ${formData.subject || 'General Inquiry'}`
-    const emailBody = `
+    try {
+      // Prepare email parameters for EmailJS
+      const emailParams = {
+        form_type: 'Contact Form',
+        from_name: formData.name,
+        from_email: formData.email,
+        company: formData.company,
+        subject: formData.subject || 'General Inquiry',
+        message: formData.message,
+        to_email: 'helio@nowgo.com.br'
+      }
+      
+      // Send email using EmailJS
+      await sendEmail(emailParams)
+      
+      // Show success message
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+      
+      // Close modal after showing success message
+      setTimeout(() => {
+        onClose()
+      }, 3000)
+      
+    } catch (error) {
+      console.error('Failed to send email:', error)
+      setIsSubmitting(false)
+      
+      // Fallback to mailto if EmailJS fails
+      const emailSubject = `AI Hospital Contact: ${formData.subject || 'General Inquiry'}`
+      const emailBody = `
 Name: ${formData.name}
 Email: ${formData.email}
 Company: ${formData.company}
@@ -926,24 +955,19 @@ ${formData.message}
 ---
 Sent from AI Hospital System Contact Form
 Website: https://www.nowgomedai.com
-    `.trim()
+      `.trim()
 
-    // Create mailto link
-    const mailtoLink = `mailto:helio@nowgo.com.br?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
-    
-    // Open email client
-    window.location.href = mailtoLink
-    
-    // Show success message
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
+      const mailtoLink = `mailto:helio@nowgo.com.br?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
+      window.location.href = mailtoLink
       
-      // Close modal after showing success message
+      // Show success message even with fallback
       setTimeout(() => {
-        onClose()
-      }, 3000)
-    }, 1000)
+        setIsSubmitted(true)
+        setTimeout(() => {
+          onClose()
+        }, 3000)
+      }, 1000)
+    }
   }
 
   // Success state UI
@@ -1092,13 +1116,42 @@ function GetStartedForm({ onClose }) {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Create email content
-    const emailSubject = `AI Hospital Get Started: ${formData.interestArea || 'New Request'}`
-    const emailBody = `
+    try {
+      // Prepare email parameters for EmailJS
+      const emailParams = {
+        form_type: 'Get Started Request',
+        from_name: formData.name,
+        from_email: formData.email,
+        company: formData.organization,
+        interest_area: formData.interestArea,
+        message: formData.message,
+        subject: `AI Hospital Get Started: ${formData.interestArea || 'New Request'}`,
+        to_email: 'helio@nowgo.com.br'
+      }
+      
+      // Send email using EmailJS
+      await sendEmail(emailParams)
+      
+      // Show success message
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+      
+      // Close modal after showing success message
+      setTimeout(() => {
+        onClose()
+      }, 3000)
+      
+    } catch (error) {
+      console.error('Failed to send email:', error)
+      setIsSubmitting(false)
+      
+      // Fallback to mailto if EmailJS fails
+      const emailSubject = `AI Hospital Get Started: ${formData.interestArea || 'New Request'}`
+      const emailBody = `
 GET STARTED REQUEST
 
 Name: ${formData.name}
@@ -1112,24 +1165,19 @@ ${formData.message}
 ---
 Sent from AI Hospital System - Get Started Form
 Website: https://www.nowgomedai.com
-    `.trim()
+      `.trim()
 
-    // Create mailto link
-    const mailtoLink = `mailto:helio@nowgo.com.br?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
-    
-    // Open email client
-    window.location.href = mailtoLink
-    
-    // Show success message
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
+      const mailtoLink = `mailto:helio@nowgo.com.br?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
+      window.location.href = mailtoLink
       
-      // Close modal after showing success message
+      // Show success message even with fallback
       setTimeout(() => {
-        onClose()
-      }, 3000)
-    }, 1000)
+        setIsSubmitted(true)
+        setTimeout(() => {
+          onClose()
+        }, 3000)
+      }, 1000)
+    }
   }
 
   // Success state UI
@@ -1274,13 +1322,44 @@ function ScheduleForm({ onClose }) {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
     
-    // Create email content
-    const emailSubject = `AI Hospital Consultation Request: ${formData.consultationTopic || 'General Consultation'}`
-    const emailBody = `
+    try {
+      // Prepare email parameters for EmailJS
+      const emailParams = {
+        form_type: 'Consultation Request',
+        from_name: formData.name,
+        from_email: formData.email,
+        phone: formData.phone,
+        preferred_date: formData.preferredDate,
+        preferred_time: formData.preferredTime,
+        consultation_topic: formData.consultationTopic,
+        message: formData.additionalInfo,
+        subject: `AI Hospital Consultation Request: ${formData.consultationTopic || 'General Consultation'}`,
+        to_email: 'helio@nowgo.com.br'
+      }
+      
+      // Send email using EmailJS
+      await sendEmail(emailParams)
+      
+      // Show success message
+      setIsSubmitting(false)
+      setIsSubmitted(true)
+      
+      // Close modal after showing success message
+      setTimeout(() => {
+        onClose()
+      }, 3000)
+      
+    } catch (error) {
+      console.error('Failed to send email:', error)
+      setIsSubmitting(false)
+      
+      // Fallback to mailto if EmailJS fails
+      const emailSubject = `AI Hospital Consultation Request: ${formData.consultationTopic || 'General Consultation'}`
+      const emailBody = `
 CONSULTATION REQUEST
 
 Name: ${formData.name}
@@ -1296,24 +1375,19 @@ ${formData.additionalInfo}
 ---
 Sent from AI Hospital System - Schedule Consultation Form
 Website: https://www.nowgomedai.com
-    `.trim()
+      `.trim()
 
-    // Create mailto link
-    const mailtoLink = `mailto:helio@nowgo.com.br?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
-    
-    // Open email client
-    window.location.href = mailtoLink
-    
-    // Show success message
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
+      const mailtoLink = `mailto:helio@nowgo.com.br?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`
+      window.location.href = mailtoLink
       
-      // Close modal after showing success message
+      // Show success message even with fallback
       setTimeout(() => {
-        onClose()
-      }, 3000)
-    }, 1000)
+        setIsSubmitted(true)
+        setTimeout(() => {
+          onClose()
+        }, 3000)
+      }, 1000)
+    }
   }
 
   // Success state UI
