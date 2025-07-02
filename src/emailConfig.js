@@ -1,107 +1,136 @@
 // EmailJS Configuration
 import emailjs from '@emailjs/browser'
 
-// EmailJS Public Configuration
-// These are public keys and safe to expose in frontend
+// EmailJS Configuration - FULLY ACTIVATED
 export const EMAIL_CONFIG = {
-  SERVICE_ID: 'service_hospital_ai',
-  TEMPLATE_ID: 'template_contact',
-  PUBLIC_KEY: 'YOUR_PUBLIC_KEY_HERE'
+  SERVICE_ID: 'service_s005689',  // ✅ Provided by user
+  TEMPLATE_ID: 'template_ivhdwii', // ✅ Provided by user
+  PUBLIC_KEY: 'AFxQ-t50O0gwJe_1l' // ✅ Provided by user - SYSTEM ACTIVATED!
 }
 
 // Initialize EmailJS
 export const initEmailJS = () => {
-  // For demo purposes, we'll use a fallback email system
-  // In production, you would configure with real EmailJS credentials
-  console.log('EmailJS initialized for AI Hospital System')
+  if (EMAIL_CONFIG.PUBLIC_KEY !== 'YOUR_PUBLIC_KEY_HERE') {
+    emailjs.init(EMAIL_CONFIG.PUBLIC_KEY)
+    console.log('EmailJS initialized successfully for AI Hospital System')
+  } else {
+    console.log('EmailJS not initialized - Public Key needed')
+  }
 }
 
-// Send email function with fallback
+// Send email function with real EmailJS
 export const sendEmail = async (templateParams) => {
   try {
-    // For now, we'll simulate email sending and provide instructions
-    // to set up real EmailJS service
+    // Check if EmailJS is properly configured
+    if (EMAIL_CONFIG.PUBLIC_KEY === 'YOUR_PUBLIC_KEY_HERE') {
+      console.log('EmailJS not configured - using fallback')
+      throw new Error('EmailJS not configured')
+    }
     
-    console.log('Email would be sent with params:', templateParams)
+    // Initialize EmailJS
+    emailjs.init(EMAIL_CONFIG.PUBLIC_KEY)
     
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1000))
+    // Add timestamp and format parameters
+    const emailParams = {
+      ...templateParams,
+      timestamp: new Date().toLocaleString('pt-BR', {
+        timeZone: 'America/Sao_Paulo',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      }),
+      to_email: 'helio@nowgo.com.br'
+    }
     
-    // For demonstration, we'll create a formatted email content
-    // that can be manually sent or used to set up real email service
-    const emailContent = formatEmailContent(templateParams)
+    console.log('Sending email with EmailJS:', emailParams)
     
-    // In a real implementation, this would be:
-    // return await emailjs.send(EMAIL_CONFIG.SERVICE_ID, EMAIL_CONFIG.TEMPLATE_ID, templateParams, EMAIL_CONFIG.PUBLIC_KEY)
+    // Send email using EmailJS
+    const response = await emailjs.send(
+      EMAIL_CONFIG.SERVICE_ID,
+      EMAIL_CONFIG.TEMPLATE_ID,
+      emailParams
+    )
     
-    // For now, we'll log the email content and show success
-    console.log('Email content to be sent to helio@nowgo.com.br:', emailContent)
-    
-    return { status: 200, text: 'Email sent successfully' }
+    console.log('Email sent successfully via EmailJS:', response)
+    return { status: 200, text: 'Email sent successfully via EmailJS' }
     
   } catch (error) {
-    console.error('Email sending failed:', error)
+    console.error('EmailJS sending failed:', error)
+    
+    // Fallback to formatted email content for manual sending
+    const emailContent = formatEmailContent(templateParams)
+    console.log('Fallback email content:', emailContent)
+    
+    // Re-throw error to trigger fallback in forms
     throw error
   }
 }
 
-// Format email content for manual sending or real service setup
+// Format email content for fallback or manual sending
 const formatEmailContent = (params) => {
-  const timestamp = new Date().toLocaleString()
+  const timestamp = new Date().toLocaleString('pt-BR', {
+    timeZone: 'America/Sao_Paulo'
+  })
   
   return {
     to: 'helio@nowgo.com.br',
     subject: params.subject || 'AI Hospital System Contact',
     body: `
-${params.form_type || 'Contact Form'} Submission
-Received: ${timestamp}
+${params.form_type || 'Contact Form'} - AI Hospital System
+Recebido em: ${timestamp}
 
-Name: ${params.from_name || 'Not provided'}
-Email: ${params.from_email || 'Not provided'}
-${params.company ? `Company: ${params.company}` : ''}
-${params.phone ? `Phone: ${params.phone}` : ''}
-${params.interest_area ? `Interest Area: ${params.interest_area}` : ''}
-${params.consultation_topic ? `Consultation Topic: ${params.consultation_topic}` : ''}
-${params.preferred_date ? `Preferred Date: ${params.preferred_date}` : ''}
-${params.preferred_time ? `Preferred Time: ${params.preferred_time}` : ''}
+Nome: ${params.from_name || 'Não informado'}
+Email: ${params.from_email || 'Não informado'}
+${params.company ? `Empresa: ${params.company}` : ''}
+${params.phone ? `Telefone: ${params.phone}` : ''}
+${params.interest_area ? `Área de Interesse: ${params.interest_area}` : ''}
+${params.consultation_topic ? `Tópico da Consulta: ${params.consultation_topic}` : ''}
+${params.preferred_date ? `Data Preferida: ${params.preferred_date}` : ''}
+${params.preferred_time ? `Horário Preferido: ${params.preferred_time}` : ''}
 
-Message:
-${params.message || 'No message provided'}
+Mensagem:
+${params.message || 'Nenhuma mensagem fornecida'}
 
 ---
-Sent from AI Hospital System
+Enviado do AI Hospital System
 Website: https://www.nowgomedai.com
-Form Type: ${params.form_type || 'Contact'}
+Tipo de Formulário: ${params.form_type || 'Contato'}
     `.trim()
   }
 }
 
-// Setup instructions for real EmailJS implementation
-export const getEmailJSSetupInstructions = () => {
-  return `
-To set up real email sending with EmailJS:
+// Get missing configuration info
+export const getMissingConfig = () => {
+  const missing = []
+  
+  if (EMAIL_CONFIG.SERVICE_ID === 'service_hospital_ai') {
+    missing.push('Service ID')
+  }
+  
+  if (EMAIL_CONFIG.TEMPLATE_ID === 'template_contact') {
+    missing.push('Template ID')
+  }
+  
+  if (EMAIL_CONFIG.PUBLIC_KEY === 'YOUR_PUBLIC_KEY_HERE') {
+    missing.push('Public Key')
+  }
+  
+  return missing
+}
 
-1. Go to https://www.emailjs.com/
-2. Create a free account
-3. Add an email service (Gmail, Outlook, etc.)
-4. Create an email template
-5. Get your Service ID, Template ID, and Public Key
-6. Replace the configuration in emailConfig.js
-
-Template variables to use:
-- {{from_name}} - Sender name
-- {{from_email}} - Sender email
-- {{subject}} - Email subject
-- {{message}} - Message content
-- {{form_type}} - Type of form (Get Started, Schedule, Contact)
-- {{company}} - Company name (optional)
-- {{phone}} - Phone number (optional)
-- {{interest_area}} - Interest area (Get Started)
-- {{consultation_topic}} - Consultation topic (Schedule)
-- {{preferred_date}} - Preferred date (Schedule)
-- {{preferred_time}} - Preferred time (Schedule)
-
-The emails will be sent directly to helio@nowgo.com.br
-  `
+// Configuration status
+export const getConfigStatus = () => {
+  const missing = getMissingConfig()
+  
+  return {
+    isConfigured: missing.length === 0,
+    missing: missing,
+    serviceId: EMAIL_CONFIG.SERVICE_ID,
+    templateId: EMAIL_CONFIG.TEMPLATE_ID,
+    hasPublicKey: EMAIL_CONFIG.PUBLIC_KEY !== 'YOUR_PUBLIC_KEY_HERE'
+  }
 }
 
