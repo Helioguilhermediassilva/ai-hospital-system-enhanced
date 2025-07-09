@@ -2,6 +2,10 @@ import { useState } from 'react'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog.jsx'
+import { Input } from '@/components/ui/input.jsx'
+import { Label } from '@/components/ui/label.jsx'
+import { Textarea } from '@/components/ui/textarea.jsx'
 import { 
   Brain, 
   Globe, 
@@ -18,9 +22,17 @@ import {
   Download,
   Menu,
   X,
-  Server
+  Server,
+  Calendar
 } from 'lucide-react'
 import './App.css'
+
+// Import images
+import culturalDiversityImg from './assets/cultural_diversity.jpg'
+import sustainableInfrastructureImg from './assets/sustainable_infrastructure.jpg'
+import aiDiagnosticsImg from './assets/ai_diagnostics.jpg'
+import implementationRoadmapImg from './assets/implementation_roadmap.jpg'
+import modularArchitectureImg from './assets/ai_architecture_apple_style.png'
 import { sendEmail, initEmailJS } from './emailConfig'
 
 // Import images and media
@@ -165,23 +177,23 @@ function App() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 border-b">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Apple-style Navigation */}
+      <nav className="apple-nav">
+        <div className="apple-container">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <Bot className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold">AI Hospital</span>
+              <Bot className="h-6 w-6 text-foreground" />
+              <span className="text-lg font-semibold">AI Hospital</span>
             </div>
             
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - Apple style */}
             <div className="hidden md:flex items-center space-x-8">
-              <a href="#overview" className="text-foreground hover:text-primary transition-colors">Overview</a>
-              <a href="#architecture" className="text-foreground hover:text-primary transition-colors">Architecture</a>
-              <a href="#features" className="text-foreground hover:text-primary transition-colors">Features</a>
-              <a href="#implementation" className="text-foreground hover:text-primary transition-colors">Implementation</a>
-              <a href="#regions" className="text-foreground hover:text-primary transition-colors">Regional Adaptation</a>
-              <Button onClick={handleGetStarted}>Get Started</Button>
+              <a href="#overview" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Overview</a>
+              <a href="#architecture" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Architecture</a>
+              <a href="#features" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Features</a>
+              <a href="#implementation" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Implementation</a>
+              <a href="#regions" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Regional Adaptation</a>
+              <button className="apple-button-primary" onClick={handleGetStarted}>Get Started</button>
             </div>
 
             {/* Mobile menu button */}
@@ -198,76 +210,64 @@ function App() {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <div className="md:hidden py-4 border-t">
+            <div className="md:hidden py-4 border-t border-border">
               <div className="flex flex-col space-y-4">
-                <a href="#overview" className="text-foreground hover:text-primary transition-colors">Overview</a>
-                <a href="#architecture" className="text-foreground hover:text-primary transition-colors">Architecture</a>
-                <a href="#features" className="text-foreground hover:text-primary transition-colors">Features</a>
-                <a href="#implementation" className="text-foreground hover:text-primary transition-colors">Implementation</a>
-                <a href="#regions" className="text-foreground hover:text-primary transition-colors">Regional Adaptation</a>
-                <Button className="w-full" onClick={handleGetStarted}>Get Started</Button>
+                <a href="#overview" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Overview</a>
+                <a href="#architecture" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Architecture</a>
+                <a href="#features" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Features</a>
+                <a href="#implementation" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Implementation</a>
+                <a href="#regions" className="text-sm font-medium text-foreground hover:text-primary transition-colors">Regional Adaptation</a>
+                <button className="apple-button-primary w-full" onClick={handleGetStarted}>Get Started</button>
               </div>
             </div>
           )}
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="pt-16 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="container mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-8">
-              <div className="space-y-4">
-                <Badge variant="secondary" className="w-fit">
-                  <Leaf className="w-4 h-4 mr-2" />
-                  Sustainable Healthcare Innovation
-                </Badge>
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
-                  100% AI-Operated
-                  <span className="text-primary block">Hospital Prototype</span>
-                </h1>
-                <p className="text-xl text-muted-foreground leading-relaxed">
-                  A revolutionary healthcare solution designed for global scalability, 
-                  cultural adaptation, and sustainable operations in emerging countries 
-                  and underserved regions.
-                </p>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="group" onClick={handleViewDemo}>
-                  <Play className="w-5 h-5 mr-2" />
-                  View Demo
-                  <ChevronRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </Button>
-                <Button variant="outline" size="lg" onClick={handleDownloadWhitepaper}>
-                  <Download className="w-5 h-5 mr-2" />
-                  Download Whitepaper
-                </Button>
-              </div>
-
-              <div className="grid grid-cols-3 gap-8 pt-8 border-t">
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">50+</div>
-                  <div className="text-sm text-muted-foreground">Countries Ready</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">99.5%</div>
-                  <div className="text-sm text-muted-foreground">Uptime Target</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl font-bold text-primary">24/7</div>
-                  <div className="text-sm text-muted-foreground">AI Operations</div>
-                </div>
-              </div>
+      {/* Apple-style Hero Section */}
+      <section className="apple-section apple-hero" id="overview">
+        <div className="apple-container text-center apple-fade-in">
+          <div className="space-y-8 max-w-4xl mx-auto">
+            <div className="space-y-6">
+              <Badge variant="secondary" className="w-fit mx-auto">
+                <Leaf className="w-4 h-4 mr-2" />
+                Sustainable Healthcare Innovation
+              </Badge>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight">
+                100% AI-Operated
+                <span className="text-primary block">Hospital Prototype</span>
+              </h1>
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+                A revolutionary healthcare solution designed for global scalability, 
+                cultural adaptation, and sustainable operations in emerging countries 
+                and underserved regions.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="apple-button-primary group" onClick={handleScheduleConsultation}>
+                <Calendar className="w-5 h-5 mr-2" />
+                Schedule a Demo
+              </button>
+              <button className="apple-button-secondary" onClick={handleDownloadWhitepaper}>
+                <Download className="w-5 h-5 mr-2" />
+                Download Whitepaper
+              </button>
             </div>
 
-            <div className="relative">
-              <img 
-                src={heroBanner} 
-                alt="AI Hospital Technology" 
-                className="w-full h-auto rounded-lg shadow-2xl"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/20 to-transparent rounded-lg"></div>
+            <div className="grid grid-cols-3 gap-8 pt-12 max-w-2xl mx-auto">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary">50+</div>
+                <div className="text-sm text-muted-foreground">Countries Ready</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary">99.5%</div>
+                <div className="text-sm text-muted-foreground">Uptime Target</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-primary">24/7</div>
+                <div className="text-sm text-muted-foreground">AI Operations</div>
+              </div>
             </div>
           </div>
         </div>
@@ -335,8 +335,8 @@ function App() {
 
             <div className="relative">
               <img 
-                src={aiArchitecture} 
-                alt="AI Hospital Architecture" 
+                src={modularArchitectureImg} 
+                alt="Modular Hospital Architecture" 
                 className="w-full h-auto rounded-lg shadow-lg"
               />
             </div>
@@ -478,8 +478,8 @@ function App() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative order-2 lg:order-1">
               <img 
-                src={globalDiversity} 
-                alt="Global Healthcare Diversity" 
+                src={culturalDiversityImg} 
+                alt="Cultural Diversity in Healthcare" 
                 className="w-full h-auto rounded-lg shadow-lg"
               />
             </div>
@@ -553,8 +553,8 @@ function App() {
 
             <div className="relative">
               <img 
-                src={sustainabilityFeatures} 
-                alt="Sustainable Hospital Design" 
+                src={sustainableInfrastructureImg} 
+                alt="Sustainable Hospital Infrastructure" 
                 className="w-full h-auto rounded-lg shadow-lg"
               />
             </div>
@@ -568,8 +568,8 @@ function App() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="relative order-2 lg:order-1">
               <img 
-                src={aiDiagnostics} 
-                alt="AI Medical Diagnostics Interface" 
+                src={aiDiagnosticsImg} 
+                alt="Advanced AI Medical Diagnostics" 
                 className="w-full h-auto rounded-lg shadow-lg"
               />
             </div>
@@ -661,8 +661,8 @@ function App() {
 
           <div className="text-center">
             <img 
-              src={globalImplementation} 
-              alt="Global Implementation Map" 
+              src={implementationRoadmapImg} 
+              alt="Implementation Roadmap Process" 
               className="w-full max-w-4xl mx-auto rounded-lg shadow-lg"
             />
           </div>
@@ -849,7 +849,7 @@ function App() {
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
           <div className="relative bg-background rounded-lg max-w-md w-full max-h-[90vh] overflow-hidden">
             <div className="flex justify-between items-center p-4 border-b">
-              <h3 className="text-lg font-semibold">Schedule Consultation</h3>
+              <h3 className="text-lg font-semibold">Schedule a Demo</h3>
               <Button
                 variant="ghost"
                 size="sm"
@@ -1308,7 +1308,7 @@ function ScheduleForm({ onClose }) {
     phone: '',
     preferredDate: '',
     preferredTime: '',
-    consultationTopic: '',
+    demoTopic: '',
     additionalInfo: ''
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -1329,15 +1329,15 @@ function ScheduleForm({ onClose }) {
     try {
       // Prepare email parameters for EmailJS
       const emailParams = {
-        form_type: 'Consultation Request',
+        form_type: 'Demo Request',
         from_name: formData.name,
         from_email: formData.email,
         phone: formData.phone,
         preferred_date: formData.preferredDate,
         preferred_time: formData.preferredTime,
-        consultation_topic: formData.consultationTopic,
+        demo_topic: formData.demoTopic,
         message: formData.additionalInfo,
-        subject: `AI Hospital Consultation Request: ${formData.consultationTopic || 'General Consultation'}`,
+        subject: `AI Hospital Demo Request: ${formData.demoTopic || 'General Demo'}`,
         to_email: 'helio@nowgo.com.br'
       }
       
@@ -1358,22 +1358,22 @@ function ScheduleForm({ onClose }) {
       setIsSubmitting(false)
       
       // Fallback to mailto if EmailJS fails
-      const emailSubject = `AI Hospital Consultation Request: ${formData.consultationTopic || 'General Consultation'}`
+      const emailSubject = `AI Hospital Demo Request: ${formData.demoTopic || 'General Demo'}`
       const emailBody = `
-CONSULTATION REQUEST
+DEMO REQUEST
 
 Name: ${formData.name}
 Email: ${formData.email}
 Phone: ${formData.phone}
 Preferred Date: ${formData.preferredDate}
 Preferred Time: ${formData.preferredTime}
-Consultation Topic: ${formData.consultationTopic}
+Demo Topic: ${formData.demoTopic}
 
 Additional Information:
 ${formData.additionalInfo}
 
 ---
-Sent from AI Hospital System - Schedule Consultation Form
+Sent from AI Hospital System - Schedule Demo Form
 Website: https://www.nowgomedai.com
       `.trim()
 
@@ -1399,9 +1399,9 @@ Website: https://www.nowgomedai.com
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
           </svg>
         </div>
-        <h3 className="text-lg font-semibold text-green-800 mb-2">Consultation Scheduled!</h3>
+        <h3 className="text-lg font-semibold text-green-800 mb-2">Demo Scheduled!</h3>
         <p className="text-sm text-muted-foreground mb-4">
-          Thank you for scheduling a consultation. We've received your request and will contact you soon to confirm the details.
+          Thank you for scheduling a demo. We've received your request and will contact you soon to confirm the details.
         </p>
         <div className="text-xs text-muted-foreground">
           This window will close automatically...
@@ -1485,20 +1485,21 @@ Website: https://www.nowgomedai.com
       </div>
       
       <div>
-        <label className="block text-sm font-medium mb-2">Consultation Topic</label>
+        <label className="block text-sm font-medium mb-2">Demo Topic</label>
         <select 
-          name="consultationTopic"
-          value={formData.consultationTopic}
+          name="demoTopic"
+          value={formData.demoTopic}
           onChange={handleInputChange}
           disabled={isSubmitting}
           className="w-full px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
         >
-          <option value="">Select consultation topic</option>
-          <option value="General Information">General Information</option>
-          <option value="Implementation Planning">Implementation Planning</option>
-          <option value="Technical Architecture">Technical Architecture</option>
-          <option value="Regulatory Compliance">Regulatory Compliance</option>
-          <option value="Cost & ROI Analysis">Cost & ROI Analysis</option>
+          <option value="">Select demo topic</option>
+          <option value="General Overview">General Overview</option>
+          <option value="AI Diagnostics Demo">AI Diagnostics Demo</option>
+          <option value="System Architecture">System Architecture</option>
+          <option value="Implementation Process">Implementation Process</option>
+          <option value="Regional Adaptation">Regional Adaptation</option>
+          <option value="Technical Integration">Technical Integration</option>
         </select>
       </div>
       
