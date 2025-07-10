@@ -19,12 +19,6 @@ This project presents a comprehensive prototype for a fully AI-operated hospital
 - **🎥 Interactive Demo**: Built-in video demonstrations
 - **📄 Comprehensive Documentation**: Detailed whitepaper included
 
-## 🚀 Live Demo
-
-**Current Deployment**: [https://nzgtpcei.manus.space](https://nzgtpcei.manus.space)
-
-**Local Pilot Project**: [https://www.nowgomedai.online/](https://www.nowgomedai.online/)
-
 ## 🛠️ Technology Stack
 
 - **Frontend**: React 18 + Vite
