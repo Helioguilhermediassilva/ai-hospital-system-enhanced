@@ -42,38 +42,44 @@
 }
 
 :root {
-  --radius: 0.75rem; /* Apple usa bordas mais arredondadas */
-  --background: #ffffff; /* Branco puro da Apple */
-  --foreground: #1d1d1f; /* Cinza escuro da Apple */
+  /* NowGo AI Design System — Cenário B (tema claro com acentos NowGo) */
+  --radius: 0.75rem;
+  --background: #ffffff;
+  --foreground: #0F1320; /* texto principal escuro neutro alinhado a NowGo */
   --card: #ffffff;
-  --card-foreground: #1d1d1f;
+  --card-foreground: #0F1320;
   --popover: #ffffff;
-  --popover-foreground: #1d1d1f;
-  --primary: #007aff; /* Azul Apple oficial */
+  --popover-foreground: #0F1320;
+  --primary: #4A8CFF; /* azul NowGo (substitui azul Apple) */
   --primary-foreground: #ffffff;
-  --secondary: #f2f2f7; /* Cinza claro Apple */
-  --secondary-foreground: #1d1d1f;
-  --muted: #f2f2f7;
-  --muted-foreground: #8e8e93; /* Cinza médio Apple */
-  --accent: #007aff;
-  --accent-foreground: #ffffff;
-  --destructive: #ff3b30; /* Vermelho Apple */
-  --border: #d1d1d6; /* Borda sutil Apple */
-  --input: #f2f2f7;
-  --ring: #007aff;
-  --chart-1: #007aff;
-  --chart-2: #34c759; /* Verde Apple */
-  --chart-3: #ff9500; /* Laranja Apple */
-  --chart-4: #af52de; /* Roxo Apple */
-  --chart-5: #ff2d92; /* Rosa Apple */
+  --secondary: #F4F6FA; /* cinza-azulado claro NowGo */
+  --secondary-foreground: #0F1320;
+  --muted: #F4F6FA;
+  --muted-foreground: #555562; /* text-muted NowGo */
+  --accent: #33D2FF; /* cyan NowGo (acento principal) */
+  --accent-foreground: #0F1320;
+  --destructive: #ff3b30;
+  --border: #D9DEE8; /* borda neutra harmônica */
+  --input: #F4F6FA;
+  --ring: #33D2FF;
+  --chart-1: #4A8CFF;
+  --chart-2: #33D2FF;
+  --chart-3: #34c759;
+  --chart-4: #af52de;
+  --chart-5: #ff9500;
   --sidebar: #ffffff;
-  --sidebar-foreground: #1d1d1f;
-  --sidebar-primary: #007aff;
+  --sidebar-foreground: #0F1320;
+  --sidebar-primary: #4A8CFF;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f2f2f7;
-  --sidebar-accent-foreground: #1d1d1f;
-  --sidebar-border: #d1d1d6;
-  --sidebar-ring: #007aff;
+  --sidebar-accent: #F4F6FA;
+  --sidebar-accent-foreground: #0F1320;
+  --sidebar-border: #D9DEE8;
+  --sidebar-ring: #33D2FF;
+  /* Easings NowGo (cubic-bezier) para animações */
+  --easing-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --easing-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Glow sutil NowGo */
+  --accent-glow: rgba(51, 210, 255, 0.35);
 }
 
 .dark {
@@ -174,38 +180,40 @@
   transition: all 0.3s ease;
 }
 
-/* Apple Buttons */
+/* Buttons (NowGo accents — mantém classes apple-* para não quebrar markup) */
 .apple-button-primary {
-  background: #007aff;
+  background: #4A8CFF; /* azul NowGo */
   color: white;
   border: none;
   border-radius: 12px;
   padding: 12px 24px;
   font-weight: 500;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s var(--easing-smooth, ease);
   cursor: pointer;
+  box-shadow: 0 0 0 0 var(--accent-glow);
 }
 
 .apple-button-primary:hover {
-  background: #0056cc;
+  background: #3A7BEF;
   transform: translateY(-1px);
+  box-shadow: 0 8px 24px var(--accent-glow);
 }
 
 .apple-button-secondary {
   background: transparent;
-  color: #007aff;
-  border: 2px solid #007aff;
+  color: #4A8CFF;
+  border: 2px solid #4A8CFF;
   border-radius: 12px;
   padding: 10px 22px;
   font-weight: 500;
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: all 0.3s var(--easing-smooth, ease);
   cursor: pointer;
 }
 
 .apple-button-secondary:hover {
-  background: #007aff;
+  background: #4A8CFF;
   color: white;
   transform: translateY(-1px);
 }
@@ -307,10 +315,20 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Apple Focus States */
+/* Focus States (NowGo cyan ring) */
 button:focus,
 a:focus {
-  outline: 2px solid #007aff;
+  outline: 2px solid #33D2FF;
   outline-offset: 2px;
+}
+
+/* Acessibilidade: respeita prefer-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .apple-fade-in { animation: none; }
+  .apple-card,
+  .apple-button-primary,
+  .apple-button-secondary {
+    transition: none;
+  }
 }
 
